@@ -25,7 +25,7 @@ public final class ModernClickScreen extends Screen {
                 ? (float) Math.min(1.0, elapsed / 220.0) : 1.0f;
         int alpha = Math.round(185 * animationProgress);
         ctx.fill(0, 0, width, height, (alpha << 24) | 0x000A0D14);
-        int pw = Math.min(560, width - 32), ph = Math.min(330, height - 16);
+        int pw = Math.max(1, Math.min(560, width - 32)), ph = Math.max(1, Math.min(330, height - 16));
         int left = (width - pw) / 2, top = (height - ph) / 2;
         ctx.fill(left, top, left + pw, top + ph, fadeColor(ThemeConfig.panelColor()));
         ctx.fill(left, top, left + 5, top + ph, fadeColor(accent));
