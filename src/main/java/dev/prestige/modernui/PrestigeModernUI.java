@@ -88,7 +88,7 @@ public final class PrestigeModernUI implements ClientModInitializer {
     }
 
     private static void drawPanel(DrawContext ctx, int x, int y, int w, int h, String title, String subtitle) {
-        ctx.fill(x, y, x + w, y + h, 0xE9141824);
+        ctx.fill(x, y, x + w, y + h, ThemeConfig.panelColor());
         ctx.fill(x, y, x + w, y + 3, ThemeConfig.accent());
         ctx.fill(x + 12, y + 12, x + w - 12, y + 13, 0xFF343B50);
         MinecraftClient client = MinecraftClient.getInstance();
