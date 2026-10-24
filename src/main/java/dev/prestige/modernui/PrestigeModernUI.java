@@ -13,10 +13,10 @@ import org.lwjgl.glfw.GLFW;
 
 public final class PrestigeModernUI implements ClientModInitializer {
     private static KeyBinding openMenuKey;
-    private static boolean hudEnabled = true;
 
     @Override
     public void onInitializeClient() {
+        ThemeConfig.load();
         openMenuKey = KeyBindingHelper.registerKeyBinding(new KeyBinding(
                 "key.prestige_modern_ui.open_menu", InputUtil.Type.KEYSYM,
                 GLFW.GLFW_KEY_RIGHT_SHIFT, KeyBinding.Category.MISC));
@@ -31,10 +31,10 @@ public final class PrestigeModernUI implements ClientModInitializer {
 
     private static void renderHud(DrawContext ctx) {
         MinecraftClient client = MinecraftClient.getInstance();
-        if (!hudEnabled || client.player == null || client.options.hudHidden) return;
+        if (!ThemeConfig.hudEnabled || client.player == null || client.options.hudHidden) return;
         int x = 8, y = 8;
         ctx.fill(x, y, x + 142, y + 42, 0xB8171B27);
-        ctx.fill(x, y, x + 3, y + 42, 0xFF8B7CFF);
+        ctx.fill(x, y, x + 3, y + 42, ThemeConfig.accent());
         ctx.drawText(client.textRenderer, Text.literal("PRESTIGE"), x + 11, y + 7, 0xFFFFFFFF, false);
         ctx.drawText(client.textRenderer, Text.literal("Modern UI  •  1.21.11"), x + 11, y + 22, 0xFFB9C0D4, false);
     }
