@@ -46,7 +46,7 @@ public final class PrestigeModernUI implements ClientModInitializer {
 
     private static void setupTitleScreen(MinecraftClient client, Screen screen, int w, int h) {
         Screens.getButtons(screen).clear();
-        ScreenEvents.beforeRender(screen).register((s, ctx, mouseX, mouseY, delta) -> {
+        ScreenEvents.afterBackground(screen).register((s, ctx, mouseX, mouseY, delta) -> {
             int panelW = Math.min(390, w - 24);
             int panelH = 260;
             int x = (w - panelW) / 2;
@@ -66,7 +66,7 @@ public final class PrestigeModernUI implements ClientModInitializer {
 
     private static void setupPauseScreen(MinecraftClient client, Screen screen, int w, int h) {
         Screens.getButtons(screen).clear();
-        ScreenEvents.beforeRender(screen).register((s, ctx, mouseX, mouseY, delta) -> {
+        ScreenEvents.afterBackground(screen).register((s, ctx, mouseX, mouseY, delta) -> {
             int panelW = Math.min(390, w - 24);
             int panelH = 230;
             int x = (w - panelW) / 2;
