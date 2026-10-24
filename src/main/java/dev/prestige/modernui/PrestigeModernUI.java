@@ -5,12 +5,13 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.fabricmc.fabric.api.client.screen.v1.ScreenEvents;
+import net.fabricmc.fabric.api.client.screen.v1.Screens;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.GameMenuScreen;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.TitleScreen;
-import net.minecraft.client.gui.screen.option.GameOptionsScreen;
+import net.minecraft.client.gui.screen.option.OptionsScreen;
 import net.minecraft.client.gui.screen.multiplayer.MultiplayerScreen;
 import net.minecraft.client.gui.screen.world.SelectWorldScreen;
 import net.minecraft.client.gui.widget.ButtonWidget;
@@ -44,7 +45,7 @@ public final class PrestigeModernUI implements ClientModInitializer {
     }
 
     private static void setupTitleScreen(MinecraftClient client, Screen screen, int w, int h) {
-        screen.clearChildren();
+        Screens.getButtons(screen).clear();
         ScreenEvents.beforeRender(screen).register((s, ctx, mouseX, mouseY, delta) -> {
             int panelW = Math.min(390, w - 24);
             int panelH = 260;
@@ -56,9 +57,9 @@ public final class PrestigeModernUI implements ClientModInitializer {
         int buttonW = Math.min(260, w - 40);
         int x = (w - buttonW) / 2;
         int y = h / 2 - 36;
-        screen.addDrawableChild(button("Singleplayer", x, y, buttonW, () -> client.setScreen(new SelectWorldScreen(screen))));
+        Screens.getButtons(screen).add(button("Singleplayer", x, y, buttonW, () -> client.setScreen(new SelectWorldScreen(screen))));
         screen.addDrawableChild(button("Multiplayer", x, y + 34, buttonW, () -> client.setScreen(new MultiplayerScreen(screen))));
-        screen.addDrawableChild(button("Settings", x, y + 68, buttonW, () -> client.setScreen(new GameOptionsScreen(screen, client.options))));
+        screen.addDrawableChild(button("Settings", x, y + 68, buttonW, () -> client.setScreen(new OptionsScreen(screen, client.options))));
         screen.addDrawableChild(button("Prestige UI Settings", x, y + 102, buttonW, () -> client.setScreen(new ModernClickScreen())));
         screen.addDrawableChild(button("Quit Game", x, y + 136, buttonW, client::scheduleStop));
     }
