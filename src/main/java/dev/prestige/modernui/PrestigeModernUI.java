@@ -52,16 +52,16 @@ public final class PrestigeModernUI implements ClientModInitializer {
     private static void setupTitleScreen(MinecraftClient client, Screen screen, int w, int h) {
         Screens.getButtons(screen).clear();
         ScreenEvents.afterBackground(screen).register((s, ctx, mouseX, mouseY, delta) -> {
-            int panelW = Math.min(390, w - 24);
+            int panelW = Math.max(1, Math.min(390, w - 24));
             int panelH = 260;
             int x = (w - panelW) / 2;
             int y = Math.max(18, (h - panelH) / 2 + 8);
             drawPanel(ctx, x, y, panelW, panelH, "PRESTIGE", "A cleaner Minecraft experience", panelFade(screen));
         });
 
-        int buttonW = Math.min(260, w - 40);
+        int buttonW = Math.max(1, Math.min(260, w - 40));
         int x = (w - buttonW) / 2;
-        int y = h / 2 - 36;
+        int y = buttonStartY(h, 5, 34, h / 2 - 36);
         Screens.getButtons(screen).add(button("Singleplayer", x, y, buttonW, () -> client.setScreen(new SelectWorldScreen(screen))));
         Screens.getButtons(screen).add(button("Multiplayer", x, y + 34, buttonW, () -> client.setScreen(new MultiplayerScreen(screen))));
         Screens.getButtons(screen).add(button("Settings", x, y + 68, buttonW, () -> client.setScreen(new OptionsScreen(screen, client.options))));
@@ -81,13 +81,13 @@ public final class PrestigeModernUI implements ClientModInitializer {
 
         int buttonW = Math.min(260, w - 40);
         int x = (w - buttonW) / 2;
-        int y = h / 2 - 34;
+        int y = buttonStartY(h, 3, 34, h / 2 - 34);
         Screens.getButtons(screen).add(button("Back to Game", x, y, buttonW, () -> client.setScreen(null)));
         Screens.getButtons(screen).add(button("Settings", x, y + 34, buttonW, () -> client.setScreen(new OptionsScreen(screen, client.options))));
         Screens.getButtons(screen).add(button("Prestige UI Settings", x, y + 68, buttonW, () -> client.setScreen(new ModernClickScreen())));
     }
 
-    private static ButtonWidget button(String label, int x, int y, int width, Runnable action) {
+    private static int buttonStartY(int screenHeight, int count, int spacing, int preferredY) {\n        int contentHeight = (count - 1) * spacing + 24;\n        int latestSafeY = Math.max(4, screenHeight - contentHeight - 4);\n        return Math.max(4, Math.min(preferredY, latestSafeY));\n    }\n\n    private static ButtonWidget button(String label, int x, int y, int width, Runnable action) {
         return ButtonWidget.builder(Text.literal(label), b -> action.run())
                 .dimensions(x, y, width, 24).build();
     }
