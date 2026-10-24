@@ -87,7 +87,13 @@ public final class PrestigeModernUI implements ClientModInitializer {
         Screens.getButtons(screen).add(button("Prestige UI Settings", x, y + 68, buttonW, () -> client.setScreen(new ModernClickScreen())));
     }
 
-    private static int buttonStartY(int screenHeight, int count, int spacing, int preferredY) {\n        int contentHeight = (count - 1) * spacing + 24;\n        int latestSafeY = Math.max(4, screenHeight - contentHeight - 4);\n        return Math.max(4, Math.min(preferredY, latestSafeY));\n    }\n\n    private static ButtonWidget button(String label, int x, int y, int width, Runnable action) {
+    private static int buttonStartY(int screenHeight, int count, int spacing, int preferredY) {
+        int contentHeight = (count - 1) * spacing + 24;
+        int latestSafeY = Math.max(4, screenHeight - contentHeight - 4);
+        return Math.max(4, Math.min(preferredY, latestSafeY));
+    }
+
+    private static ButtonWidget button(String label, int x, int y, int width, Runnable action) {
         return ButtonWidget.builder(Text.literal(label), b -> action.run())
                 .dimensions(x, y, width, 24).build();
     }
