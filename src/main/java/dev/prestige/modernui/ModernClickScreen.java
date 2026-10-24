@@ -67,7 +67,7 @@ public final class ModernClickScreen extends Screen {
         double mouseY = click.y();
         int button = click.button();
         if (button == 0) {
-            int pw = Math.min(560, width - 32), ph = Math.min(330, height - 16);
+            int pw = Math.max(1, Math.min(560, width - 32)), ph = Math.max(1, Math.min(330, height - 16));
             int left = (width - pw) / 2, top = (height - ph) / 2;
             if (inside(mouseX, mouseY, left + 22, top + 104, pw - 44, 38)) {
                 ThemeConfig.hudEnabled = !ThemeConfig.hudEnabled;
