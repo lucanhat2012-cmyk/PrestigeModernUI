@@ -53,7 +53,7 @@ public final class PrestigeModernUI implements ClientModInitializer {
         Screens.getButtons(screen).clear();
         ScreenEvents.afterBackground(screen).register((s, ctx, mouseX, mouseY, delta) -> {
             int panelW = Math.max(1, Math.min(390, w - 24));
-            int panelH = 260;
+            int panelH = Math.max(1, Math.min(260, h - 24));
             int x = (w - panelW) / 2;
             int y = Math.max(18, (h - panelH) / 2 + 8);
             drawPanel(ctx, x, y, panelW, panelH, "PRESTIGE", "A cleaner Minecraft experience", panelFade(screen));
@@ -72,14 +72,14 @@ public final class PrestigeModernUI implements ClientModInitializer {
     private static void setupPauseScreen(MinecraftClient client, Screen screen, int w, int h) {
         Screens.getButtons(screen).clear();
         ScreenEvents.afterBackground(screen).register((s, ctx, mouseX, mouseY, delta) -> {
-            int panelW = Math.min(390, w - 24);
-            int panelH = 230;
+            int panelW = Math.max(1, Math.min(390, w - 24));
+            int panelH = Math.max(1, Math.min(230, h - 24));
             int x = (w - panelW) / 2;
             int y = (h - panelH) / 2;
             drawPanel(ctx, x, y, panelW, panelH, "GAME PAUSED", "Your world, your settings", panelFade(screen));
         });
 
-        int buttonW = Math.min(260, w - 40);
+        int buttonW = Math.max(1, Math.min(260, w - 40));
         int x = (w - buttonW) / 2;
         int y = buttonStartY(h, 3, 34, h / 2 - 34);
         Screens.getButtons(screen).add(button("Back to Game", x, y, buttonW, () -> client.setScreen(null)));
