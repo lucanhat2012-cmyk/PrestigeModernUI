@@ -1,16 +1,17 @@
 # Prestige Modern UI
 
-An original client-side Fabric UI mod for **Minecraft Java 1.21.11**. The visual style is a custom midnight interface with configurable accent colors; it does not reuse proprietary client assets.
+An original client-side Fabric UI mod for **Minecraft Java 1.21.11**. It uses a custom midnight palette and accent themes rather than third-party client assets.
 
-## Current implementation
+## Features
 
-- **Right Shift** opens/closes the custom in-game panel.
-- Custom HUD badge with a matching accent color.
+- Reworked **title screen** with themed panel and custom Singleplayer, Multiplayer, Settings, Prestige UI Settings, and Quit buttons.
+- Reworked **pause screen** with themed panel, Back to Game, Settings, and Prestige UI Settings.
+- Press **Right Shift** in a world to open or close the custom in-game settings panel.
+- Custom HUD badge with the player's name and selected accent color.
 - Five persistent accent themes: Violet, Mint, Amber, Rose, and Blue.
-- HUD on/off toggle in the panel; settings are saved to `config/prestige-modern-ui.properties`.
-- Animated fade-in when the panel opens.
-- Vanilla inventory and container screens remain untouched.
-- GitHub Actions compiles the mod and uploads a JAR artifact when the build succeeds.
+- HUD on/off toggle; settings are saved to `config/prestige-modern-ui.properties`.
+- Animated fade-in on the in-game panel.
+- Vanilla inventory and container screens are intentionally left unchanged.
 
 ## Requirements
 
@@ -21,15 +22,15 @@ An original client-side Fabric UI mod for **Minecraft Java 1.21.11**. The visual
 
 ## Install
 
-1. Open the latest successful build at [GitHub Actions](https://github.com/lucanhat2012-cmyk/PrestigeModernUI/actions).
-2. Open the completed **Build mod** run and download the `prestige-modern-ui` artifact.
-3. Extract the downloaded artifact ZIP and put the contained mod JAR in your Minecraft `mods` folder.
-4. Ensure Fabric API for 1.21.11 is also installed, then launch the Fabric profile.
+1. Open the [GitHub Actions builds](https://github.com/lucanhat2012-cmyk/PrestigeModernUI/actions).
+2. Open the latest successful **Build mod** run and download the `prestige-modern-ui` artifact.
+3. Extract the artifact ZIP and place the contained mod JAR in your Minecraft `mods` folder.
+4. Install Fabric API for 1.21.11 too, then launch the Fabric profile.
 
 ## Build from source
 
 Run `gradle build --no-daemon` with Java 21. The compiled JAR is written to `build/libs/`.
 
-## Scope and status
+## Status
 
-This is an actively developed initial version, not a full client replacement. Main-menu and pause-menu redesigns, blur, and additional settings controls are not included yet. The build workflow is the source of truth for whether the current revision compiles successfully.
+The automated workflow verifies compilation and publishes a JAR artifact on successful builds. In-game testing across different resolutions and other mods is still recommended. Advanced shader blur and extensive animation settings are not included.
