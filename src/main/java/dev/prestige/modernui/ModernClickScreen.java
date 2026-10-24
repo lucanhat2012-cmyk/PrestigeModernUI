@@ -1,6 +1,7 @@
 package dev.prestige.modernui;
 
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.gui.Click;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.Text;
 
@@ -47,7 +48,10 @@ public final class ModernClickScreen extends Screen {
     }
 
     @Override
-    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+    public boolean mouseClicked(Click click, boolean doubleClick) {
+        double mouseX = click.x();
+        double mouseY = click.y();
+        int button = click.button();
         if (button == 0) {
             int pw = Math.min(560, width - 32), ph = Math.min(330, height - 32);
             int left = (width - pw) / 2, top = (height - ph) / 2;
@@ -62,7 +66,7 @@ public final class ModernClickScreen extends Screen {
             }
             if (mouseY >= top + ph - 30 && mouseX >= left) { close(); return true; }
         }
-        return super.mouseClicked(mouseX, mouseY, button);
+        return super.mouseClicked(click, doubleClick);
     }
 
     private static boolean inside(double mx, double my, int x, int y, int w, int h) {
