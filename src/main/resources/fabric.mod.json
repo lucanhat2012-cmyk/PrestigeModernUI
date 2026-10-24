@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "id": "prestige_modern_ui",
+  "version": "${version}",
+  "name": "Prestige Modern UI",
+  "description": "A clean, customizable modern UI starter for Minecraft Java Edition.",
+  "authors": ["PrestigeModernUI contributors"],
+  "license": "MIT",
+  "environment": "client",
+  "entrypoints": { "client": ["dev.prestige.modernui.PrestigeModernUI"] },
+  "depends": {
+    "fabricloader": ">=0.18.1",
+    "minecraft": "~1.21.11",
+    "java": ">=21",
+    "fabric-api": "*"
+  }
+}
