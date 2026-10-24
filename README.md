@@ -10,6 +10,8 @@ An original client-side Fabric UI mod for **Minecraft Java 1.21.11**. It uses a 
 - Custom HUD badge with the player's name and selected accent color.
 - Five persistent accent themes: Violet, Mint, Amber, Rose, and Blue.
 - HUD on/off toggle; settings are saved to `config/prestige-modern-ui.properties`.
+- Three configurable panel opacity levels shared by the custom settings, title, and pause panels.
+- Toggleable UI fade-in animation, with the setting saved between launches.
 - Animated fade-in on the in-game panel.
 - Vanilla inventory and container screens are intentionally left unchanged.
 
@@ -33,4 +35,4 @@ Run `gradle build --no-daemon` with Java 21. The compiled JAR is written to `bui
 
 ## Status
 
-The automated workflow verifies compilation and publishes a JAR artifact on successful builds. In-game testing across different resolutions and other mods is still recommended. Advanced shader blur and extensive animation settings are not included.
+The automated workflow verifies compilation and publishes a JAR artifact on successful builds. In-game testing across different resolutions and other mods is still recommended. Shader-based background blur is not included. The current animation setting controls the in-game settings panel fade-in; additional animation types and in-game testing remain future work.
