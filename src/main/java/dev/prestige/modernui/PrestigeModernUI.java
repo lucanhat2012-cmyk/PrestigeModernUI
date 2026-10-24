@@ -20,8 +20,12 @@ import net.minecraft.client.util.InputUtil;
 import net.minecraft.text.Text;
 import org.lwjgl.glfw.GLFW;
 
+import java.util.Map;
+import java.util.WeakHashMap;
+
 public final class PrestigeModernUI implements ClientModInitializer {
     private static KeyBinding openMenuKey;
+    private static final Map<Screen, Long> SCREEN_OPEN_TIMES = new WeakHashMap<>();
 
     @Override
     public void onInitializeClient() {
@@ -38,6 +42,7 @@ public final class PrestigeModernUI implements ClientModInitializer {
         });
 
         ScreenEvents.AFTER_INIT.register((client, screen, scaledWidth, scaledHeight) -> {
+            SCREEN_OPEN_TIMES.put(screen, System.currentTimeMillis());
             if (screen instanceof TitleScreen) setupTitleScreen(client, screen, scaledWidth, scaledHeight);
             else if (screen instanceof GameMenuScreen) setupPauseScreen(client, screen, scaledWidth, scaledHeight);
         });
@@ -51,7 +56,7 @@ public final class PrestigeModernUI implements ClientModInitializer {
             int panelH = 260;
             int x = (w - panelW) / 2;
             int y = Math.max(18, (h - panelH) / 2 + 8);
-            drawPanel(ctx, x, y, panelW, panelH, "PRESTIGE", "A cleaner Minecraft experience");
+            drawPanel(ctx, x, y, panelW, panelH, "PRESTIGE", "A cleaner Minecraft experience", panelFade(screen));
         });
 
         int buttonW = Math.min(260, w - 40);
@@ -71,7 +76,7 @@ public final class PrestigeModernUI implements ClientModInitializer {
             int panelH = 230;
             int x = (w - panelW) / 2;
             int y = (h - panelH) / 2;
-            drawPanel(ctx, x, y, panelW, panelH, "GAME PAUSED", "Your world, your settings");
+            drawPanel(ctx, x, y, panelW, panelH, "GAME PAUSED", "Your world, your settings", panelFade(screen));
         });
 
         int buttonW = Math.min(260, w - 40);
@@ -87,13 +92,24 @@ public final class PrestigeModernUI implements ClientModInitializer {
                 .dimensions(x, y, width, 24).build();
     }
 
-    private static void drawPanel(DrawContext ctx, int x, int y, int w, int h, String title, String subtitle) {
-        ctx.fill(x, y, x + w, y + h, ThemeConfig.panelColor());
-        ctx.fill(x, y, x + w, y + 3, ThemeConfig.accent());
-        ctx.fill(x + 12, y + 12, x + w - 12, y + 13, 0xFF343B50);
+    private static float panelFade(Screen screen) {
+        if (!ThemeConfig.animationsEnabled) return 1.0f;
+        long opened = SCREEN_OPEN_TIMES.getOrDefault(screen, System.currentTimeMillis());
+        return Math.min(1.0f, Math.max(0.0f, (System.currentTimeMillis() - opened) / 240.0f));
+    }
+
+    private static int fadeColor(int color, float progress) {
+        int alpha = (color >>> 24) & 0xFF;
+        return (color & 0x00FFFFFF) | (Math.round(alpha * progress) << 24);
+    }
+
+    private static void drawPanel(DrawContext ctx, int x, int y, int w, int h, String title, String subtitle, float fade) {
+        ctx.fill(x, y, x + w, y + h, fadeColor(ThemeConfig.panelColor(), fade));
+        ctx.fill(x, y, x + w, y + 3, fadeColor(ThemeConfig.accent(), fade));
+        ctx.fill(x + 12, y + 12, x + w - 12, y + 13, fadeColor(0xFF343B50, fade));
         MinecraftClient client = MinecraftClient.getInstance();
-        ctx.drawCenteredTextWithShadow(client.textRenderer, Text.literal(title), x + w / 2, y + 22, 0xFFF4F5FA);
-        ctx.drawCenteredTextWithShadow(client.textRenderer, Text.literal(subtitle), x + w / 2, y + 39, 0xFFADB5C8);
+        ctx.drawCenteredTextWithShadow(client.textRenderer, Text.literal(title), x + w / 2, y + 22, fadeColor(0xFFF4F5FA, fade));
+        ctx.drawCenteredTextWithShadow(client.textRenderer, Text.literal(subtitle), x + w / 2, y + 39, fadeColor(0xFFADB5C8, fade));
     }
 
     private static void renderHud(DrawContext ctx) {
