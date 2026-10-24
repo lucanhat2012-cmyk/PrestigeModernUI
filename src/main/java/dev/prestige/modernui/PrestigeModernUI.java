@@ -116,7 +116,7 @@ public final class PrestigeModernUI implements ClientModInitializer {
         MinecraftClient client = MinecraftClient.getInstance();
         if (!ThemeConfig.hudEnabled || client.player == null || client.options.hudHidden) return;
         int x = 8, y = 8;
-        ctx.fill(x, y, x + 154, y + 46, 0xB8171B27);
+        int hudAlpha = Math.round(255 * ThemeConfig.opacityPercent() / 100.0f);\n        ctx.fill(x, y, x + 154, y + 46, (hudAlpha << 24) | 0x00171B27);
         ctx.fill(x, y, x + 3, y + 46, ThemeConfig.accent());
         ctx.drawText(client.textRenderer, Text.literal("PRESTIGE"), x + 11, y + 7, 0xFFFFFFFF, false);
         ctx.drawText(client.textRenderer, Text.literal("Modern UI  •  1.21.11"), x + 11, y + 22, 0xFFB9C0D4, false);
