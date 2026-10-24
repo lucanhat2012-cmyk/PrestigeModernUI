@@ -36,7 +36,9 @@ public final class ModernClickScreen extends Screen {
         drawOption(ctx, left + 22, top + 150, pw - 44, 38, "ACCENT THEME", ThemeConfig.themeName(), mouseX, mouseY, accent);
         drawOption(ctx, left + 22, top + 196, pw - 44, 38, "PANEL OPACITY", ThemeConfig.opacityName(), mouseX, mouseY, accent);
         drawOption(ctx, left + 22, top + 242, pw - 44, 38, "UI ANIMATIONS", ThemeConfig.animationsEnabled ? "ON" : "OFF", mouseX, mouseY, accent);
-        ctx.drawText(textRenderer, Text.literal("RIGHT SHIFT  •  TOGGLE MENU"), left + 22, top + ph - 18, MUTED, false);
+        ctx.drawText(textRenderer, Text.literal("RESET DEFAULTS"), left + 22, top + ph - 18, accent, false);
+        String closeLabel = "RIGHT SHIFT  •  CLOSE";
+        ctx.drawText(textRenderer, Text.literal(closeLabel), left + pw - textRenderer.getWidth(closeLabel) - 22, top + ph - 18, MUTED, false);
         super.render(ctx, mouseX, mouseY, delta);
     }
 
@@ -74,7 +76,15 @@ public final class ModernClickScreen extends Screen {
                 ThemeConfig.save();
                 return true;
             }
-            if (mouseY >= top + ph - 26 && mouseX >= left) { close(); return true; }
+            if (mouseY >= top + ph - 26 && mouseX >= left && mouseX <= left + pw / 2) {
+                ThemeConfig.hudEnabled = true;
+                ThemeConfig.animationsEnabled = true;
+                ThemeConfig.themeIndex = 0;
+                ThemeConfig.opacityIndex = 1;
+                ThemeConfig.save();
+                return true;
+            }
+            if (mouseY >= top + ph - 26 && mouseX > left + pw / 2 && mouseX <= left + pw) { close(); return true; }
         }
         return super.mouseClicked(click, doubleClick);
     }
